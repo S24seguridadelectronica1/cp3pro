@@ -7,9 +7,10 @@ import './Register.css'; // Importa el archivo CSS
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
+    nombre: '',
+    telefono: '',
+    direccion: '',
+    "ciudad y barrio": '', // Ajustado para reflejar el nombre exacto
   });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,15 +29,15 @@ const Register = () => {
     setError(null);
     setSuccessMessage('');
 
-    const { name, phone, email } = formData;
+    const { nombre, telefono, direccion, "ciudad y barrio": ciudadYbarrio } = formData;
 
     // Validación de campos
-    if (!name || !phone || !email) {
+    if (!nombre || !telefono || !direccion || !ciudadYbarrio) {
       setError('Por favor, completa todos los campos.');
       return;
     }
 
-    if (phone.length < 10) {
+    if (telefono.length < 10) {
       setError('El teléfono debe tener al menos 10 caracteres.');
       return;
     }
@@ -44,10 +45,10 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // Insertar datos en la tabla "registro"
+      // Insertar datos en la tabla "cp3pro"
       const { error: dbError } = await supabase
-        .from('registro')
-        .insert([{ name, phone, email }]);
+        .from('cp3pro')
+        .insert([{ nombre, telefono, direccion, "ciudad y barrio": ciudadYbarrio }]);
 
       if (dbError) {
         console.error('Error al guardar los datos:', dbError);
@@ -55,12 +56,12 @@ const Register = () => {
         return;
       }
 
-      setSuccessMessage('¡Registro exitoso! Puedes iniciar sesión ahora.');
-      setFormData({ name: '', phone: '', email: '' });
+      setSuccessMessage('¡Compra exitosa! Haremos llegar la cámara a la puerta de tu casa.');
+      setFormData({ nombre: '', telefono: '', direccion: '', "ciudad y barrio": '' });
 
       // Redirigir después de un tiempo
       setTimeout(() => {
-        navigate('/login');
+        navigate('/login'); // Cambia esto a donde desees redirigir
       }, 2000);
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
@@ -74,44 +75,56 @@ const Register = () => {
     <Container fluid className="my-5" style={{ maxWidth: '90vw' }}>
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
-          <h2 className="text-center mb-4 display-4">Registrarse</h2> {/* Aumentar tamaño del título */}
+          <h2 className="text-center mb-4 display-4">Registrarse</h2>
           <p className="text-center mb-4 fs-5">Completa el formulario para crear una cuenta.</p>
           {error && <Alert variant="danger">{error}</Alert>}
           {successMessage && <Alert variant="success">{successMessage}</Alert>}
           <Form onSubmit={handleSubmit} className="bg-light p-5 rounded shadow-sm">
-            <Form.Group controlId="name" className="mb-3">
+            <Form.Group controlId="nombre" className="mb-3">
               <Form.Label className="fs-5">Nombre</Form.Label>
               <Form.Control
                 type="text"
-                name="name"
-                value={formData.name}
+                name="nombre"
+                value={formData.nombre}
                 onChange={handleChange}
                 required
                 placeholder="Ingresa tu nombre"
                 className="fs-5"
               />
             </Form.Group>
-            <Form.Group controlId="phone" className="mb-3">
+            <Form.Group controlId="telefono" className="mb-3">
               <Form.Label className="fs-5">Teléfono</Form.Label>
               <Form.Control
                 type="tel"
-                name="phone"
-                value={formData.phone}
+                name="telefono"
+                value={formData.telefono}
                 onChange={handleChange}
                 required
                 placeholder="Ingresa tu número de teléfono"
                 className="fs-5"
               />
             </Form.Group>
-            <Form.Group controlId="email" className="mb-3">
-              <Form.Label className="fs-5">Correo Electrónico</Form.Label>
+            <Form.Group controlId="direccion" className="mb-3">
+              <Form.Label className="fs-5">Dirección</Form.Label>
               <Form.Control
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="direccion"
+                value={formData.direccion}
                 onChange={handleChange}
                 required
-                placeholder="Ingresa tu correo electrónico"
+                placeholder="Ingresa tu dirección"
+                className="fs-5"
+              />
+            </Form.Group>
+            <Form.Group controlId="ciudadYbarrio" className="mb-3">
+              <Form.Label className="fs-5">Ciudad y Barrio</Form.Label>
+              <Form.Control
+                type="text"
+                name="ciudad y barrio" // Ajustado para reflejar el nombre exacto
+                value={formData["ciudad y barrio"]} // Ajustado
+                onChange={handleChange}
+                required
+                placeholder="Ingresa tu ciudad y barrio"
                 className="fs-5"
               />
             </Form.Group>
@@ -121,7 +134,7 @@ const Register = () => {
               className="w-100 btn-lg fs-5"
               variant="primary"
             >
-              {loading ? 'Registrando...' : 'Registrarse'}
+              {loading ? 'Registrando...' : 'comprar'}
             </Button>
           </Form>
         </Col>
