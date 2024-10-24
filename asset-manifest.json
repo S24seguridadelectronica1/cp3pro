@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/cp3pro.git/static/css/main.d19cd025.css",
+    "main.js": "/cp3pro.git/static/js/main.d43ff781.js",
+    "static/js/952.86f2e66b.chunk.js": "/cp3pro.git/static/js/952.86f2e66b.chunk.js",
+    "index.html": "/cp3pro.git/index.html",
+    "main.d19cd025.css.map": "/cp3pro.git/static/css/main.d19cd025.css.map",
+    "main.d43ff781.js.map": "/cp3pro.git/static/js/main.d43ff781.js.map",
+    "952.86f2e66b.chunk.js.map": "/cp3pro.git/static/js/952.86f2e66b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d19cd025.css",
+    "static/js/main.d43ff781.js"
+  ]
+}
